@@ -284,3 +284,18 @@ function copyspouseaddress_civicrm_post($op, $objectName, $objectId, &$objectRef
     }
   }
 }
+
+/**
+ * Implements hook_civicrm_navigationMenu().
+ *
+ * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_navigationMenu
+ *
+ */
+function copyspouseaddress_civicrm_navigationMenu(&$menu) {
+  _copyspouseaddress_civix_insert_navigation_menu($menu, 'Administer/Communications', [
+    'name' => 'Copy Spouse Address',
+    'url' => CRM_Utils_System::url('civicrm/bulk/copy/spouseaddress', 'reset=1', TRUE),
+    'permission' => 'administer CiviCRM',
+  ]);
+  _copyspouseaddress_civix_navigationMenu($menu);
+}
