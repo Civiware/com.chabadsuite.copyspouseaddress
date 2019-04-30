@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<menu>
+  <item>
+    <path>civicrm/bulk/copy/spouseaddress</path>
+    <page_callback>CRM_CopySpouseAddress_Form_CopyAddress</page_callback>
+    <title>Copy Spouse Address</title>
+    <access_arguments>administer CiviCRM</access_arguments>
+  </item>
+</menu>
