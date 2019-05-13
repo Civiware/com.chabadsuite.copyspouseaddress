@@ -15,9 +15,7 @@ class CRM_CopySpouseAddress_BAO_CopySpouseAddress {
    *
    */
   public static function shareAddress($contactIdA, $contactIdB) {
-    $locationTypeId = civicrm_api3('Setting', 'getvalue', [
-      'name' => "share_spouse_address_loc_type",
-    ]);
+    $locationTypeId = self::getLocationTypeId();
     foreach ([
       'A',
       'B'
@@ -60,9 +58,7 @@ class CRM_CopySpouseAddress_BAO_CopySpouseAddress {
    *
    */
   public static function deleteSharedAddress($contactIdA, $contactIdB) {
-    $locationTypeId = civicrm_api3('Setting', 'getvalue', [
-      'name' => "share_spouse_address_loc_type",
-    ]);
+    $locationTypeId = self::getLocationTypeId();
     $query = "
       DELETE ca.*
       FROM `civicrm_address` ca
@@ -71,6 +67,20 @@ class CRM_CopySpouseAddress_BAO_CopySpouseAddress {
         AND ca.contact_id IN($contactIdA, $contactIdB)
         AND ca2.contact_id IN($contactIdA, $contactIdB)";
     CRM_Core_DAO::executeQuery($query);
+  }
+
+  public static function getLocationTypeId() {
+    $locationTypeId = civicrm_api3('Setting', 'getvalue', [
+      'name' => "share_spouse_address_loc_type",
+    ]);
+    if (empty($locationTypeId)) {
+      $locationTypeId = CRM_Core_PseudoConstant::getKey(
+        'CRM_Core_BAO_Address',
+        'location_type_id',
+        'Home'
+      );
+    }
+   return $locationTypeId;
   }
 
   /**
