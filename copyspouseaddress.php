@@ -251,6 +251,9 @@ function _copyspouseaddress_civicrm_checkAndDeleteAddress($relId) {
  */
 function copyspouseaddress_civicrm_post($op, $objectName, $objectId, &$objectRef) {
   if ($op == 'create' && $objectName == 'Address') {
+    if (empty($objectRef->contact_id)) {
+      return;
+    }
     $locationTypeId = CRM_CopySpouseAddress_BAO_CopySpouseAddress::getLocationTypeId();
     if ($objectRef->location_type_id == $locationTypeId) {
       CRM_CopySpouseAddress_BAO_CopySpouseAddress::processSpouse(
